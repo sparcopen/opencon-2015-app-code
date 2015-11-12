@@ -1,0 +1,82 @@
+
+@import "basic.less";
+[class*="fa-"] {font-family:'FontAwesome'; width:1em; display:inline-block;
+    font:normal normal normal 14px/1 FontAwesome;
+    font-size:inherit;
+}
+
+/* BASIC
+***************************************************************************************************/
+
+@link: #f00;
+
+::-moz-selection{ background:#000; color:#fff; text-shadow: none; }
+::selection { background:#000; color:#fff; text-shadow: none; }
+a:link { -webkit-tap-highlight-color:#000; }
+
+html {height:100%;}
+body {
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight:normal;
+    color:#000;
+    background:#eee;
+    position:relative;
+    font-size:15px;
+    line-height:1.3;
+    -webkit-font-smoothing:antialiased;
+    height:100%;
+}
+
+input,
+textarea,
+select {
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+}
+
+*:focus {outline:none !important;}
+a {text-decoration:none;
+    &,
+    &:hover,
+    &:active,
+    &:visited {color:@link;}
+    &:hover {text-decoration:none;}
+}
+
+/* MAIN
+***************************************************************************************************/
+
+.oc-container {max-width:770px; margin:0 auto;
+
+}
+
+.oc-info {padding:80px 0 130px;
+
+    .oc-row {border-top:1px solid #ccc; padding:35px;
+        &:first-child {border:none;}
+        strong {font-weight:bold; color:#888;}
+        p {margin-top:9px;}
+    }
+
+}
+
+.oc-header {position:fixed; left:0; right:0; top:0; background:rgba(255,255,255,.9);
+    padding:15px 30px; text-align:center; box-shadow:0 0 3px rgba(0,0,0,.2);
+    h1 {font-size:20px; font-weight:bold;}
+    p {color:#888;}
+}
+
+.oc-footer {color:#888; position:fixed; left:0; right:0; bottom:0; background:rgba(255,255,255,.9);
+    padding:30px 0; text-align:center; box-shadow:0 0 3px rgba(0,0,0,.2);
+    div {display:inline-block;}
+    .oc-btn {padding:10px 20px; min-width:130px; border-radius:5px; border:none; background:#339bcc;
+        color:#fff; font-weight:bold; margin:5px;
+        &.oc-btn-warning {background:#b33;}
+    }
+}
+
+.oc-footer {
+    p {
+        color:#888;
+    }
+}

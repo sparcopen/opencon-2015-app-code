@@ -1,0 +1,153 @@
+{% extends "rating/base.html" %}
+
+{% block container %}
+    <div class="">
+        <div class="oc-header clearfix">
+            {% if forms.rate.errors %}
+            <h1 class="text-danger">
+                {% if forms.rate.rating.errors.0 == "This field is required." %}
+                    Please make sure to fill out the rating before submitting.
+                {% else %}
+                    Rating form contains errors, please see below for details.
+                {% endif %}
+            </h1>
+            {% else %}
+            <h1>You have rated {{ rate_count }} applications.</h1>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="oc-container oc-info">
+
+        {% for field in application %}
+        <div class="oc-row">
+            <div>
+                <strong>{{field.title}}</strong>
+            </div>
+            <div>
+                <p>{{field.content}}</p>
+            </div>
+        </div>
+        {% endfor %}
+
+        </br>
+        <form role="form" method="post">
+            {% csrf_token %}
+            {% for hidden in forms.rate.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+            <div class="form-group warning">
+                <label
+                    for="{{ forms.rate.rating.id_for_label }}"
+                >
+                    <strong>Rating:</strong>
+                </label>
+                <p class="help-block">
+                    Based on your experience at OpenCon, to what extent would you recommend this be considered for acceptance? [Scale: 100-1 where 100 = Strongly Recommend, 1 = Do Not Recommend]
+                </p>
+                {% if forms.rate.errors %}
+                <p class="text-danger">
+                    Please enter value between 1 and 100.
+                </p>
+                {% endif %}
+                {{ forms.rate.rating }}
+
+            </div>
+            <div class="form-group">
+                <strong>Check if any of the following apply:</strong>
+                </br>
+                {{ forms.rate.application_incomplete }}
+                <label
+                    for="{{ forms.rate.application_incomplete.id_for_label }}"
+                >
+                    <p class="help-block">Application is incomplete</p>
+                </label>
+                </br>
+                {{ forms.rate.application_unreadable }}
+                <label
+                    for="{{ forms.rate.application_unreadable.id_for_label }}"
+                >
+                    <p class="help-block">Application is unreadable</p>
+                </label>
+                </br>
+                {{ forms.rate.needs_review }}
+                <label
+                    for="{{ forms.rate.needs_review.id_for_label }}"
+                ><p class="help-block">
+                    Application should be reviewed for whether the applicant is a student or early career academic professional
+                </p></label>
+            </div>
+            <div class="form-group">
+                <strong>
+                    In your opinion, is this person engaged in any interesting projects or activities that we should consider following up about?
+                </strong>
+                </br>
+                {{ forms.rate.person_engaged }}
+                <label
+                    for="{{ forms.rate.person_engaged.id_for_label }}"
+                >
+                    <p class="help-block">Yes person is engaged</p>
+                </label>
+                </br>
+                <label
+                    for="{{ forms.rate.why_engaged.id_for_label }}"
+                >
+                    <p class="help-block">If “yes”, add in comments</p>
+                </label>
+                </br>
+                {{ forms.rate.why_engaged}}
+            </div>
+            <div class="form-group">
+                <label
+                    for="{{ forms.rate.comments.id_for_label }}"
+                >
+                    <p><strong>Additional Comments: (optional):</strong></p>
+                </label>
+                </br>
+                {{ forms.rate.comments }}
+            </div>
+            <div class="form-group">
+                <strong>
+                    I have a conflict of interest with this application and would like to excuse myself from rating it.
+                </strong>
+                </br>
+                {{ forms.rate.conflict }}
+                <label
+                    for="{{ forms.rate.conflict.id_for_label }}"
+                >
+                    <p class="help-block">I have a conflict</p>
+                </label>
+            </div>
+            <input class="btn btn-large btn-success" type="submit" value="Submit Rating" />
+        </form>
+    </div>
+    <div>
+        <div class="oc-row oc-footer">
+            <div>
+                {% if user.terminator %}
+                <div class="container">
+                    <div class=".col-md-6">
+                        <form role="form" method="post">
+                            {% csrf_token %}
+                            {{ forms.approve}}
+                            <input class="btn btn-md btn-success" type="submit" value="Approve" />
+                        </form>
+                    </div>
+
+                    <div class=".col-md-6">
+                        <form role="form" method="post">
+                            {% csrf_token %}
+                            {{ forms.terminate}}
+                            <input class="btn btn-md btn-danger" type="submit" value="Terminate" />
+                        </form>
+                    </div>
+                </div>
+                {% else %}
+                <p>Logged in as: {{user.email}}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

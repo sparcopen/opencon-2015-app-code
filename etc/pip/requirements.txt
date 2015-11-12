@@ -1,0 +1,9 @@
+ipdb
+pytest
+fabric
+gspread
+gdata
+django==1.8.1
+django_extensions
+django-mailgun
+gunicorn

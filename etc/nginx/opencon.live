@@ -1,0 +1,41 @@
+upstream opencon {
+    server 188.164.129.125:8888 fail_timeout=0;
+    # server 127.0.0.1:8888 fail_timeout=0;
+
+}
+
+server {
+    listen      80;
+    server_name secure.opencon2015.org;
+    rewrite     ^   https://$server_name$request_uri? permanent;
+}
+
+server {
+    listen 443;
+    ssl on;
+    ssl_certificate /home/opencon/services/opencon/etc/ssl/ssl-unified.crt;
+    ssl_certificate_key /home/opencon/services/opencon/etc/ssl/ssl.key;
+
+    server_name secure.opencon2015.org;
+
+    location /static/ {
+        alias /home/opencon/services/opencon/static/;
+    }
+
+    location / {
+
+        proxy_hide_header  X-Frame-Options;
+        proxy_set_header   Host             $http_host;
+        proxy_set_header   X-Real-IP        $remote_addr;
+        proxy_set_header   X-Forwarded-Host $http_host;
+        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto http;
+        proxy_set_header   X-Forwarded-Protocol http;
+
+        if (!-f $request_filename) {
+            proxy_pass http://opencon;
+            break;
+        }
+    }
+
+}

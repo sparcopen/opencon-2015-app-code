@@ -1,0 +1,147 @@
+﻿{% extends "rating/base.html" %}
+
+{% block container %}
+    <div class="">
+        <div class="oc-header clearfix">
+            {% if forms.rate.errors %}
+            <h1 class="text-danger">
+                {% if forms.rate.rating.errors.0 == "This field is required." %}
+                    Please make sure to fill out the rating before submitting.
+                {% else %}
+                    Rating form contains errors, please see below for details.
+                {% endif %}
+            </h1>
+            {% else %}
+            <h1>You have rated {{ rate_count }} applications.</h1>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="oc-container oc-info">
+
+        <!--
+        <div class="oc-row">
+            {% if average_rating %}
+            <div>
+                <strong>Average rating: {{ average_rating }}</strong>
+            </div>
+            {% endif %}
+            {% if approval_level %}
+            <div>
+                <strong>Approval level: {{ approval_level }}</strong>
+            </div>
+            {% endif %}
+        </div>
+        -->
+
+        {% for field in application %}
+        <div class="oc-row">
+            <div>
+                <strong>{{field.title}}</strong>
+            </div>
+            <div>
+                <p>{{field.content}}</p>
+            </div>
+        </div>
+        {% endfor %}
+
+        </br>
+        <form role="form" method="post">
+            {% csrf_token %}
+            {% for hidden in forms.rate.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+            <div class="form-group warning">
+                <label
+                    for="{{ forms.rate.interest.id_for_label }}"
+                >
+                    <strong>Interest in OpenCon’s issue areas</strong>
+                </label>
+                <p class="help-block">
+                    [Scale: 100-1 where 100 = Strongest, 1 = Weakest]
+                </p>
+                {% if forms.rate.errors %}
+                <p class="text-danger">
+                    Please enter value between 1 and 100.
+                </p>
+                {% endif %}
+                {{ forms.rate.interest }}
+            </div>
+            <div class="form-group warning">
+                <label
+                    for="{{ forms.rate.engagement.id_for_label }}"
+                >
+                    <strong>Demonstrated previous engagement, ideas for new projects, or plans to contribute meaningfully to an existing initiative</strong>
+                </label>
+                <p class="help-block">
+                    [Scale: 100-1 where 100 = Strongest, 1 = Weakest]
+                </p>
+                {% if forms.rate.errors %}
+                <p class="text-danger">
+                    Please enter value between 1 and 100.
+                </p>
+                {% endif %}
+                {{ forms.rate.engagement }}
+            </div>
+            <div class="form-group warning">
+                <label
+                    for="{{ forms.rate.action.id_for_label }}"
+                >
+                    <strong>Likelihood to take meaningful action after OpenCon 2015</strong>
+                </label>
+                <p class="help-block">
+                    [Scale: 100-1 where 100 = Strongest, 1 = Weakest]
+                </p>
+                {% if forms.rate.errors %}
+                <p class="text-danger">
+                    Please enter value between 1 and 100.
+                </p>
+                {% endif %}
+                {{ forms.rate.action }}
+            </div>
+            <div class="form-group">
+                <label
+                    for="{{ forms.rate.comments.id_for_label }}"
+                >
+                    <p><strong>If this person is engaged in any interesting activities, or you have any additional comments, please enter them here.</strong></p>
+                </label>
+                </br>
+                {{ forms.rate.comments }}
+            </div>
+            <div class="form-group">
+                <strong>
+                    Needs review (details below)
+                </strong>
+                </br>
+                {{ forms.rate.needs_review }}
+                <label
+                    for="{{ forms.rate.needs_review.id_for_label }}"
+                >
+                    <p class="help-block">Check if the application needs review</p>
+                </label>
+            </div>
+            <div class="form-group">
+                <strong>
+                    If review is needed, describe the problem/issue with application
+                </strong>
+                </br>
+                {{ forms.rate.application_problem }}
+                <label
+                    for="{{ forms.rate.application_problem.id_for_label }}"
+                >
+                    <p class="help-block">If you think there are any problems/errors with this application that should be reviewed before it is considered for acceptance, please explain here. For example, if the person does not seem early career, or if the application is missing information.</p>
+                </label>
+            </div>
+            <input class="btn btn-large btn-success" type="submit" value="Submit Rating" />
+        </form>
+    </div>
+    <div>
+        <div class="oc-row oc-footer">
+            <div>
+                <p>Logged in as: {{user.email}}</p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
