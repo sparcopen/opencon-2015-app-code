@@ -81,7 +81,7 @@ def initialize():
     get_sheet("users")
 
 
-def udpate_users():
+def update_users():
     new_data = []
     local_data = User.objects.fingerprint_map()
     fresh_data = get_sheet("users").get_data()
