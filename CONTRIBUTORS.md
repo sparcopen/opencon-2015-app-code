@@ -3,6 +3,8 @@
 * **Nicole Allen**
 
   * The brain behind the app, inventor of *TERMINATE*
+    (a feature that helps take out duplicate, low quality
+    or spam submissions out of rating pool).
 
 * **[Jan Gondol](https://github.com/jangondol)**
 
